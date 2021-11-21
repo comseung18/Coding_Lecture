@@ -8,7 +8,8 @@
 <body>
     <script>
         //  https://comseung18.github.io/Coding_Lecture/
-        location = location.href + '/introduction/plan/introduce.html';
+        if (location.host.startsWith('127.0.0.1')) location = location.origin + '/introduction/plan/introduce.html';
+        else location = location + '/introduction/plan/introduce.html';
     </script>
 </body>
 
