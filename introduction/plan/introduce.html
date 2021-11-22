@@ -28,13 +28,15 @@
         #navbar-aside {
             left: 100%;
         }
+        
+        #left_side_bar {}
     </style>
 
     <!-- 목차 active -->
     <script>
     </script>
 
-    <!-- 사이드바 따라오게하는 코드 -->
+    <!-- 스크롤바 따라오게하는 코드 -->
     <script>
         //// 아래 offset 함수는 퀵점프에 이용된 함수라, 이미 html상 존재한다면 삭제해도 됨
         function offset(el) {
@@ -52,7 +54,9 @@
 
             var lastScrollTop = 0;
             var article = document.getElementById("content"); //본문영역 id
-            var aside = document.getElementById("navbar-aside"); //사이드바 id
+            var aside = document.getElementById("navbar-aside"); //스크롤바 id
+            var side_bar = document.getElementById("left_side_bar"); // 좌측 사이드바 id
+
             if (document.documentElement.clientWidth > 767 && article.offsetHeight > aside.offsetHeight) {
                 window.addEventListener("scroll", function() {
                     var scrT = window.pageYOffset || document.documentElement.scrollTop;
@@ -104,6 +108,7 @@
         });
     </script>
 
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar-aside">
@@ -136,7 +141,7 @@
 
     <div class="row">
         <!-- sidebar -->
-        <div data-bs-offset="2" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div data-bs-offset="2" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="left_side_bar">
             <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
 
                 <span class="fs-5 fw-semibold">목 차</span>
@@ -154,7 +159,19 @@
                             </ul>
                         </div>
                     </li>
-
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#programing-collapse" aria-expanded="false">
+                          프로그래밍
+                        </button>
+                        <div class="collapse" id="programing-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="../programing/concept.html" class="link-dark rounded ">프로그래밍의 개념</a></li>
+                            </ul>
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="../programing/lang.html" class="link-dark rounded sub_selected">프로그래밍 언어</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -177,6 +194,9 @@
                 <p>
                     이번에 길다면 길고 짧다면 짧은 시간동안 강의(?)를 하게 되어서 이렇게 홈페이지 만들게 되었어 ㅎ.ㅎ <del>나도 웹 공부도 하고</del>
                 </p>
+                <p>
+                    나도 아직 배워야 할게 많은 학생이지만, 그래도 막 컴퓨터공부를 시작한 사람들에게 알려주는 정도는 충분하다고 생각해.
+                </p>
                 <p></p>
                 <hr>
                 <h3 id="item-1-1">컴퓨터 관련된 장점?</h3>
@@ -184,12 +204,12 @@
                 <h5>1. 알고리즘에 자신이 있다.</h5>
                 <p>
                     <img src="img/boj_logo.png" width="150px">
-                    <a href="https://noj.am">백준</a>에서 100문제정도 풀게 되면 순위가 25,000 등 정도되는데,
+                    <a href="https://noj.am"><span style="font-size: 2em;">백준</span></a> ( 알고리즘 문제 풀이 사이트 )에서 100문제정도 풀게 되면 순위가 25,000 등 정도되는데,
                     <img src="img/boj_rank.PNG" width="130%">
                 </p>
                 <br>
                 <p>
-                    알고리즘 관련 문제를 꾸준히 풀어서 상위권에 있고 기업코딩테스트 만큼은 큰 걱정하지 않아도 되는 실력이라고 생각해.<br>
+                    알고리즘 관련 문제를 꾸준히 풀어서 상위권 (100위권) 에 있고 기업코딩테스트 만큼은 큰 걱정하지 않아도 되는 실력이라고 생각해.<br>
                 </p>
                 <h5>2. 컴공으로서 다양한 경험을 했다.</h5>
                 <p>
@@ -202,19 +222,9 @@
                         <li>Python</li>
                         <li>Javascript</li>
                     </ul>
-                    과 같은 여러 프로그래밍언어에 대한 경험을 가지고 있고,
+                    과 같은 여러 프로그래밍언어에 대한 경험을 가지고 있고, 군대도 공군의 정보체계관리단 정보보호팀에서 근무하면서 감을 잃지 않으려고 노력했고, 지금도 꾸준히 공부중이야.
 
                 </p>
-                <h4 id="item-2">Item 2</h4>
-                <p>
-
-                </p>
-                <h4 id="item-3">Item 3</h4>
-                <p></p>
-                <h5 id="item-3-1">Item 3-1</h5>
-                <p></p>
-                <h5 id="item-3-2">Item 3-2</h5>
-                <p></p>
             </div>
         </div>
 
@@ -227,12 +237,14 @@
                     <nav class="nav nav-pills flex-column">
                         <a class="nav-link ms-3 my-1" href="#item-1-1">나의 장점?</a>
                     </nav>
+                    <!--
                     <a class="nav-link" href="#item-2">Item 2</a>
                     <a class="nav-link" href="#item-3">Item 3</a>
                     <nav class="nav nav-pills flex-column">
                         <a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
                         <a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
                     </nav>
+                    -->
                 </nav>
             </nav>
         </div>
