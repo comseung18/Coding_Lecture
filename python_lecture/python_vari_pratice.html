@@ -229,10 +229,185 @@
                 <br>
                 <br>
                 <br>
-                <p id="item-1-1">
-                    이번 시간에는 변수를 이용해서 어떤 걸 할 수 있는지 실습을 해보자.
+                <p>
+                    이번 시간에는 변수를 이용해서 어떤 걸 할 수 있는지 익숙해 지는 시간을 가져보자.
                 </p>
+                <br>
+                <h3 id="item-1-1">
+                    간단한 입출력
+                </h3>
+                <br>
+                <br>
+                <br>
+                <p>
+                    본격적인 응용에 앞서 간단한 입출력을 먼저 알 필요가 있어.
+                </p>
+                <p>
+                    입출력의 정확한 원리는 나중에 함수를 알게되면 명확해지겠지만, 지금은 활용을 위해 이렇게 하는 거다 라는 것만 알고 넘어가면 돼.
+                </p>
+                <p>
+                    먼저 출력을 해보자. 사실 출력은 알게 모르게 이전 부터 사용해왔어.
+                </p>
+                <pre><code class="python">
+                    print("print something")
+                    # print something 이라는 문자열이 출력된다.
+                </code></pre>
+                <p>
+                    print(x) 라고 사용하고 x 부분에 뭔가 문자나 숫자 혹은 변수를 넣게 되면 그걸 화면에 출력해주는 기능을 하고 있어.
+                </p>
+                <p>
+                    다음으로 입력을 해보자.
+                </p>
+                <pre><code class="python">
+                    # example 1. 이름을 입력받아서 출력하기.
+                    
+                    name = input()
+                    print("My Name is " + name)
+                </code></pre>
+                <p>
+                    위 프로그램을 실행하게 되면 커서가 깜박이는데 이 때 어떤 내용을 치고 enter 를 하면 name 변수에 내가 입력한 내용이 값으로 들어가게 되고 결과적으로 My Name is ~~~ 이런식으로 출력이 돼.
+                </p>
+                <p>
+                    입력을 받는 방법은 input() 이라고 쓰고 그 값을 받을 변수에 대입하면 돼.
+                </p>
+                <p>
+                    그럼 이제 다음으로 넘어가 볼까.
+                </p>
+                <hr>
+                <h3 id="item-1-2">정수 입력받기</h3>
+                <br>
+                <p>
+                    이번엔 정수를 입력받아서 a, b 변수에 값을 넣은 다음에 a+b 를 출력해보자.
+                </p>
+                <pre><code class="python">
+                    # example 2. 정수를 입력받아 a+b 출력하기
+                    
+                    a = input()
+                    b = input()
+                    print(a+b)
+                </code></pre>
+                <p>
+                    위 프로그램을 실행해보자. 이 때 a 에는 1을 b 에는 2를 넣어서 3이 출력되는지 확인해보자.
+                </p>
+                <p>
+                    참고로 input 함수는 1줄 씩 입력을 받기 때문에 1 엔터 2 엔터 이렇게 해야 정상적으로 진행될거야.
+                </p>
+                <p>
+                    결과가 어떻게 나왔어? <strong>띠용~  12가 출력되었네.</strong>
+                </p>
+                <p>
+                    왜 3이 아니라 12가 출력된걸까?
+                </p>
+                <p>
+                    한 번 그 이유를 확인해보자.
+                </p>
+                <pre><code class="python">
+                    # example 3. input 의 특성
+                    
+                    a = input()
+                    b = input()
+                    print(type(a)) # a 의 타입은 str
+                    print(type(b)) # b 의 타입은 str
+                    print(a+b)
+                </code></pre>
+                <p>
+                    중간에 type 을 출력하는 부분이 추가되었어.
+                </p>
+                <p>
+                    이 때 <strong>input() 으로 입력 받은 값의 자료형은 str </strong>인 것을 볼 수 있어.
+                </p>
+                <p>
+                    그러니까 a=1 , b=2 라는 숫자가 아니였고
+                </p>
+                <p>
+                    a="1", b="2" 라는 문자열이 값으로 담겨있던 거야. 그래서 a+b 를 했을 때,
+                </p>
+                <p>
+                    문자열 자료끼리 더하면 문자열이 이어지면서 합쳐지기 때문에 "12" 라는 문자열이 출력이 됐던 거였어.
+                </p>
+                <p>
+                    그러면 input() 으로 숫자를 입력받으려면 어떻게 해야할까?
+                </p>
+                <pre><code class="python">
+                    # example 4. 진짜 정수 입력받기
+                    
+                    str_a = input()
+                    a = int(str_a)
+                    print("a의 타입은 " + type(a))
+                </code></pre>
+                <p>
+                    한 번 위 코드를 보자.
+                </p>
+                <p>
+                    str_a 라는 변수에 "문자열" 로 입력을 받은 뒤에
+                </p>
+                <p>
+                    a는 int() 를 이용해 정수 타입으로 바꿔 주고 있어.
+                </p>
+                <p>
+                    이제 a, b 변수에 정수를 입력받아 a+b 를 출력하는 프로그램을 다시 만들어 보자.
+                </p>
+                <pre><code class="python">
+                    # example 5. 정수 입력받아 더하기
+                    
+                    str_a = input()
+                    str_b = input()
+                    a = int(str_a)
+                    b = int(str_b)
+                    print(a+b)
+                </code></pre>
+                <p>
+                    드디어 생각한 대로 동작하기 시작했어.
+                </p>
+                <p>
+                    정수를 입력 받는 여러 가지 방법들이 있는데 지금은 이렇게만 알고 있도록 하자.
+                </p>
+                <hr>
+                <h3 id="item-1-3">평균 구하기</h3>
+                <p>
+                    이번에는 a,b,c,d,e 에 5개의 정수를 입력받아 평균을 출력해보자.
+                </p>
+                <pre><code class="python">
+                    # example 6. 정수 5개 입력받아 평균 출력하기
+                    
+                    str_a = input()
+                    str_b = input()
+                    str_c = input()
+                    str_d = input()
+                    str_e = input()
+                    a = int(str_a)
+                    b = int(str_b)
+                    c = int(str_c)
+                    d = int(str_d)
+                    e = int(str_e)
 
+                    print((a+b+c+d+e)/5)
+                </code></pre>
+                <p>
+                    정수를 입력받아서 마지막에 모두 더해서 5 로 나눠서 평균을 구했어.
+                </p>
+                <p>
+                    사실 코딩을 할 때 중복된 부분을 최대한 제거해 주는 것이 좋아.
+                </p>
+                <p>
+                    훨씬 짧고 직관적으로 코드를 줄일 수 있기 때문에 위 코드는 사실 비효율적이지만, 아직은 반복문이나 함수를 배우지 않았기 때문에 위와 같이 작성하면 되겠어.
+                </p>
+                <hr>
+                <h3 id="item-1-4">실습</h3>
+                <br><br>
+                <p>밑변, 높이를 의미 하는 정수 2개를 변수이름 width, height 에 입력받아 삼각형의 넓이를 출력하는 프로그램 작성하기</p>
+                <hr>
+                <p>실행했을 때 아래와 같이 별을 출력하는 프로그램 작성하기</p>
+
+                <pre>
+                    *
+                    **
+                    ***
+                    ****
+                    *****
+                </pre>
+                <hr>
+                <p>변수이름 n 에 정수를 입력받아 1 + 2 + 3 + ... + n 의 값을 출력하는 프로그램 작성하기</p>
             </div>
         </div>
 
@@ -243,12 +418,10 @@
                 <nav class="nav nav-pills flex-column">
                     <a class="nav-link" href="#item-1">변수</a>
                     <nav class="nav nav-pills flex-column">
-                        <a class="nav-link ms-3 my-1" href="#item-1-1">자료형이란 ?</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-2">정수자료형</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-3">부동소수자료형</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-4">문자열자료형</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-5">불린자료형</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-6">리스트자료형</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-1">간단한 입출력</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-2">정수 입력받기</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-3">평균구하기</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-4">실습</a>
                     </nav>
                 </nav>
             </nav>
