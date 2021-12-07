@@ -121,7 +121,7 @@
         });
     </script>
 
-
+    <script src="python_lecture_path_finder.js"></script>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar-aside">
@@ -165,7 +165,7 @@
                         </button>
                         <div class="collapse show" id="beginning-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="what_is_python.html" class="link-dark rounded sub_selected">파이썬이란 무엇인가</a></li>
+                                <li><a onclick="location = path_find(location, '파이썬이란 무엇인가')" style="cursor: pointer;" class="link-dark rounded sub_selected">파이썬이란 무엇인가</a></li>
                             </ul>
                         </div>
                     </li>
@@ -175,23 +175,20 @@
                         </button>
                         <div class="collapse " id="grammer-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="python_variable.html" class="link-dark rounded">변수</a></li>
-                                <li><a href="python_data_type.html" class="link-dark rounded">자료형</a></li>
-                                <li><a href="python_vari_pratice.html" class="link-dark rounded">변수의 응용</a></li>
-                                <li><a href="" class="link-dark rounded">수식과 연산자</a></li>
-                                <li><a href="" class="link-dark rounded">산술 연산자</a></li>
-                                <li><a href="" class="link-dark rounded">관계 연산자</a></li>
-                                <li><a href="" class="link-dark rounded">논리 연산자</a></li>
-                                <li><a href="" class="link-dark rounded">비트 연산자</a></li>
-                                <li><a href="" class="link-dark rounded">조건 제어</a></li>
-                                <li><a href="" class="link-dark rounded">반복문</a></li>
-                                <li><a href="" class="link-dark rounded">함수</a></li>
-                                <li><a href="" class="link-dark rounded">지역변수와 전역변수</a></li>
-                                <li><a href="" class="link-dark rounded">모듈</a></li>
-                                <li><a href="" class="link-dark rounded">리스트와 튜플</a></li>
-                                <li><a href="" class="link-dark rounded">집합과 사전</a></li>
-                                <li><a href="" class="link-dark rounded">클래스</a></li>
-                                <li><a href="" class="link-dark rounded">파일 입출력</a></li>
+                                <li><a onclick="location = path_find(location, '변수')" style="cursor: pointer;" class="link-dark rounded ">변수</a></li>
+                                <li><a onclick="location = path_find(location, '자료형')" style="cursor: pointer;" class="link-dark rounded ">자료형</a></li>
+                                <li><a onclick="location = path_find(location, '변수의 응용')" style="cursor: pointer;" class="link-dark rounded">변수의 응용</a></li>
+                                <li><a onclick="location = path_find(location, '수식과 연산자')" style="cursor: pointer;" class="link-dark rounded">수식과 연산자</a></li>
+                                <li><a onclick="location = path_find(location, '조건 제어')" style="cursor: pointer;" class="link-dark rounded">조건 제어</a></li>
+                                <li><a onclick="location = path_find(location, '반복문')" style="cursor: pointer;" class="link-dark rounded">반복문</a></li>
+                                <li><a onclick="location = path_find(location, '함수')" style="cursor: pointer;" class="link-dark rounded">함수</a></li>
+                                <li><a onclick="location = path_find(location, '지역변수와 전역변수')" style="cursor: pointer;" class="link-dark rounded">지역변수와 전역변수</a></li>
+                                <li><a onclick="location = path_find(location, '모듈')" style="cursor: pointer;" class="link-dark rounded">모듈</a></li>
+                                <li><a onclick="location = path_find(location, '문자열심화')" style="cursor: pointer;" class="link-dark rounded">문자열심화</a></li>
+                                <li><a onclick="location = path_find(location, '리스트와 튜플')" style="cursor: pointer;" class="link-dark rounded">리스트와 튜플</a></li>
+                                <li><a onclick="location = path_find(location, '집합과 사전')" style="cursor: pointer;" class="link-dark rounded">집합과 사전</a></li>
+                                <li><a onclick="location = path_find(location, '클래스')" style="cursor: pointer;" class="link-dark rounded">클래스</a></li>
+                                <li><a onclick="location = path_find(location, '파일 입출력')" style="cursor: pointer;" class="link-dark rounded">파일 입출력</a></li>
                             </ul>
                         </div>
                     </li>
