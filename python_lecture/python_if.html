@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- highlight.js-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+
+
+    <title>강의 자료</title>
+    <style>
+        .body {
+            position: relative;
+        }
+        
+        .selected {
+            background-color: #3c9;
+            color: white;
+        }
+        
+        .sub_selected {
+            font-weight: bold;
+            color: rgb(0, 36, 24);
+        }
+        
+        #navbar-aside {
+            left: 100%;
+        }
+        
+        blockquote {
+            background-color: #eee;
+            border: 2px dashed #ccc;
+            padding: 1em;
+        }
+        
+        pre {
+            background-color: #eee;
+            border: 2px dashed #ccc;
+        }
+    </style>
+
+    <!-- 목차 active -->
+    <script>
+    </script>
+
+    <!-- 스크롤바 따라오게하는 코드 -->
+    <script>
+        //// 아래 offset 함수는 퀵점프에 이용된 함수라, 이미 html상 존재한다면 삭제해도 됨
+        function offset(el) {
+            var rect = el.getBoundingClientRect(),
+                scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+                scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            return {
+                top: rect.top + scrollTop,
+                left: rect.left + scrollLeft
+            }
+        }
+        ////
+
+        window.addEventListener("load", function() {
+
+            var lastScrollTop = 0;
+            var article = document.getElementById("content"); //본문영역 id
+            var aside = document.getElementById("navbar-aside"); //스크롤바 id
+            var side_bar = document.getElementById("left_side_bar"); // 좌측 사이드바 id
+
+            if (document.documentElement.clientWidth > 767 && article.offsetHeight > aside.offsetHeight) {
+                window.addEventListener("scroll", function() {
+                    var scrT = window.pageYOffset || document.documentElement.scrollTop;
+                    var winH = document.documentElement.clientHeight;
+                    var sideH = aside.offsetHeight;
+                    var dir = (scrT > lastScrollTop) ? "down" : "up";
+                    lastScrollTop = scrT;
+                    var sideT = offset(aside).top;
+                    var topLine = offset(article).top;
+                    var bottomLine = topLine + article.offsetHeight - winH;
+
+                    if (sideH > winH) {
+                        if (dir == "down") {
+                            if (scrT >= (sideT + sideH - winH) && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine - (sideH - winH) + 'px';
+                            }
+                            if (scrT >= bottomLine) {
+                                aside.style.marginTop = Math.max(topLine + article.offsetHeight - sideH - topLine, 0) + 'px';
+                            }
+                        } else {
+                            if (scrT <= sideT && scrT > topLine) {
+                                aside.style.marginTop = scrT - topLine + 'px';
+                            }
+                            if (scrT <= topLine) {
+                                aside.style.marginTop = 0;
+                            }
+                        }
+                    } else {
+                        bottomLine = topLine + article.offsetHeight - sideH;
+                        let delta = sideH / 2;
+                        if (dir == "down") {
+                            if (scrT > topLine && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine + delta + 'px';
+                            }
+                            if (scrT >= bottomLine) {
+                                aside.style.marginTop = bottomLine - topLine + delta + 'px';
+                            }
+                        } else {
+                            if (scrT > topLine && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine + delta + 'px';
+                            }
+                            if (scrT <= topLine) {
+                                aside.style.marginTop = 0;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="python_lecture_path_finder.js"></script>
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-aside">
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">프로그래밍 강의</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../introduction/plan/plan.html">개론</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="what_is_python.html">python</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">c lang</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- content -->
+
+    <div class="row">
+        <!-- sidebar -->
+        <div data-bs-offset="2" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="left_side_bar">
+            <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+
+                <span class="fs-5 fw-semibold">목 차</span>
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#beginning-collapse" aria-expanded="false">
+                          파이썬이란 무엇인가
+                        </button>
+                        <div class="collapse " id="beginning-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a onclick="location = path_find(location, '파이썬이란 무엇인가')" style="cursor: pointer;" class="link-dark rounded">파이썬이란 무엇인가</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <button class="btn btn-toggle align-items-center rounded selected" data-bs-toggle="collapse" data-bs-target="#grammer-collapse" aria-expanded="false">
+                          파이썬의 문법
+                        </button>
+                        <div class="collapse show" id="grammer-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a onclick="location = path_find(location, '변수')" style="cursor: pointer;" class="link-dark rounded ">변수</a></li>
+                                <li><a onclick="location = path_find(location, '자료형')" style="cursor: pointer;" class="link-dark rounded ">자료형</a></li>
+                                <li><a onclick="location = path_find(location, '변수의 응용')" style="cursor: pointer;" class="link-dark rounded">변수의 응용</a></li>
+                                <li><a onclick="location = path_find(location, '수식과 연산자')" style="cursor: pointer;" class="link-dark rounded ">수식과 연산자</a></li>
+                                <li><a onclick="location = path_find(location, '조건 제어')" style="cursor: pointer;" class="link-dark rounded sub_selected">조건 제어</a></li>
+                                <li><a onclick="location = path_find(location, '반복문')" style="cursor: pointer;" class="link-dark rounded">반복문</a></li>
+                                <li><a onclick="location = path_find(location, '함수')" style="cursor: pointer;" class="link-dark rounded">함수</a></li>
+                                <li><a onclick="location = path_find(location, '지역변수와 전역변수')" style="cursor: pointer;" class="link-dark rounded">지역변수와 전역변수</a></li>
+                                <li><a onclick="location = path_find(location, '모듈')" style="cursor: pointer;" class="link-dark rounded">모듈</a></li>
+                                <li><a onclick="location = path_find(location, '문자열심화')" style="cursor: pointer;" class="link-dark rounded">문자열심화</a></li>
+                                <li><a onclick="location = path_find(location, '리스트와 튜플')" style="cursor: pointer;" class="link-dark rounded">리스트와 튜플</a></li>
+                                <li><a onclick="location = path_find(location, '집합과 사전')" style="cursor: pointer;" class="link-dark rounded">집합과 사전</a></li>
+                                <li><a onclick="location = path_find(location, '클래스')" style="cursor: pointer;" class="link-dark rounded">클래스</a></li>
+                                <li><a onclick="location = path_find(location, '파일 입출력')" style="cursor: pointer;" class="link-dark rounded">파일 입출력</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-3">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#practice-collapse" aria-expanded="false">
+                          파이썬의 응용
+                        </button>
+                        <div class="collapse " id="practice-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="l" class="link-dark rounded">계산기 만들기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">전화번호부 만들기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">구글에서 특정검색어 이미지 다운받기</a></li>
+                                <li><a href="l" class="link-dark rounded">지뢰찾기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">지뢰찾기 (윈도우)</a></li>
+                                <li><a href="l" class="link-dark rounded">나에게 카카오톡 메시지 보내기</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- main_content -->
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <br>
+            <br>
+
+            <div class="page-header">
+                <h1>파이썬의 문법<small>#5</small></h1>
+            </div>
+
+            <br>
+            <div id="content" data-bs-spy="scroll" data-bs-target="#navbar-aside" data-bs-offset="0" tabindex="0">
+                <h1 id="item-1">조건 제어</h1>
+                <br>
+                <br>
+                <br>
+                <p>이번에는 재미있는 조건제어 대해서 알아보자.</p>
+                <img src="img/crossroads.jfif" alt="">
+                <p>
+                    프로그래밍이라는 특성상, 다양한 상황과 예외가 생겨나기 마련이고, 그것에 맞추어 대응해야 해서 조건제어는 아주 중요하다고 할 수 있어.
+                </p>
+
+                <h3>프로그램의 제어의 흐름을 느끼자.</h3>
+                <p>
+                    나중에 멀티쓰레드나 멀티프로세싱을 하게 되면 머리가 아프지만
+                </p>
+                <p>
+                    지금은 파이썬 프로그램의 제어라는 것이 위에서 부터 아래로 차례차례 한 줄씩 전달된다고 생각하자.
+                </p>
+                <pre><code class="python">
+                    # example 1. 제어의 흐름
+                    
+                    print(1)
+                    print(2)
+                    print(3)
+                    print(4)
+                    print(5)
+                </code></pre>
+                <p>
+                    위 코드를 실행했을 때, 1, 2, 3, 4, 5 가 한 줄에 하나씩 실행이 되는데,
+                </p>
+                <p>
+                    1을 출력하고 껑충 뛰어서 갑자기 3, 4, 5 를 출력하거나 출력의 순서가 바뀌지 않는다는 다는 것을 우리는 알고 있다.
+                </p>
+                <p>
+                    <strong>파이썬 코드는 기본적으로 위에서 부터 아래로 한 줄씩 실행된다.</strong>
+                </p>
+                <p>
+                    하지만 이런 유연성없는 코드로는 다양한 상황에 대처 할 수가 없다.
+                </p>
+                <p>
+                    if 를 사용하면 특정상황에서만 해당 블록이 실행되게 할 수 있다.
+                </p>
+                <p>
+                    여기서 블록이란 표현을 사용한 이유는 한줄, 두줄, 이런 정해진 줄 크기가 없기 때문이다.
+                </p>
+                <pre><code class="python">
+                    # example 2. if
+                    
+                    if True:
+                        print(1)
+                    
+                    if False:
+                        print(2)
+                    
+                    if True:
+                        print(3)
+
+                    if False:
+                        print(4)
+
+                    if True:
+                        print(5)
+                </code></pre>
+                <p>
+                    위 코드를 실행해보자. 무엇이 출력되는가?
+                </p>
+                <p>
+                    1, 3, 5 가 한줄에 하나씩 출력될 것이다.
+                </p>
+                <p>
+                    프로그램의 제어가 if 문을 만나게 되면, 그 if 문 뒤에 있는 <strong>조건</strong> 을 확인하여,
+                </p>
+                <p>
+                    해당 조건이 참이라면 if 문의 안쪽으로 제어가 이동하고, 해당 조건이 거짓이라면 if 의 안쪽을 모두 건너 뛰는 것이다.
+                </p>
+                <hr>
+                <h3>인덴트</h3>
+                <br>
+                <br>
+                <p>
+                    python 은 indent 라는 것을 사용하여 블록을 표현한다. indent 는 우리말로 들여쓰기 라고 한다.
+                </p>
+                <p>
+                    들여쓰기를 통해 블록을 구분해야 하는 상황은 다음과 같다.
+                </p>
+                <ul>
+                    <li>if 문이 해당했을 때 실행하는 블록이라는 뜻으로 구분을 해야 할 때</li>
+                    <li>(아직안배움) 함수가 실행되는 블록을 구분해야할 때</li>
+                    <li>(아직안배움) 반복문에서 반복적으로 실행하는 블록을 구분해야 할 때</li>
+                </ul>
+                <p>
+                    위에 코드를 보면 if 라고 쓴 다음 줄에 Space 4칸으로 들여쓰기 되어있다.
+                </p>
+                <p>
+                    <strong>if 문이 참일 때 실행되는 블록을 구분하기 위해서 들여쓰기가 사용되었다.</strong>
+                </p>
+                <p>
+                    이 때 인덴트 간격이 꼭 space 4칸 이라는 법이 있는 것은 아니다. 2칸도 되고 1칸도 된다. 다만 스페이스 4칸을 간격으로 많이 사용하기 때문에 관습적으로 그렇게 하는 것이다.
+                </p>
+                <p>
+                    하지만 한 번 indent 간격을 정했으면 그 간격을 일관성있게 사용해야 한다. 그렇지 않으면 파이썬에서 에러가 나게된다.
+                </p>
+                <p>
+                    또 파이참 같은 IDE 를 사용한다면 Tab 을 1번 누르면 자동으로 space 4칸을 쳐주는 기능이 있어서 좋다.
+                </p>
+                <hr>
+                <h3>if 문</h3>
+                <pre><code class="python">
+                    # example 2-1. if
+                    
+                    -> if True:
+                    ->  print(2)
+                    ->
+                    ->if False:
+                        print(1)
+                        print(1)
+                        print(1)
+                        print(1)
+                        print(1)
+                        print(1)
+                        print(1)
+                    ->
+                    ->if True:
+                    ->  print(2)
+                    ->
+                    ->if False:
+                        print(1)
+                        print(1)
+                        print(1)
+                        print(1)
+                    ->
+                    ->if True:
+                    ->  print(2)
+                </code></pre>
+                <p>
+                    위 코드는 제어를 화살표로 표현한 것이며 실제로 실행은 되지 않는 코드이다. ( 화살표 지우면 실행가능 )
+                </p>
+                <p>
+                    화살표가 if 문을 만났을 때 <strong>조건이 False</strong> 이면 해당 블록은 전부 건너띄는 것을 볼 수 있다.
+                </p>
+                <p>
+                    이 때 if 문 뒤로 참/거짓 을 표현 할 수 있는 bool 형의 값, 변수가 오게 된다.
+                </p>
+                <p>
+                    아래 코드로 예를 들어보겠다.
+                </p>
+                <pre><code class="python">
+                    # example 3. if 문 뒤로 오는 값
+                    
+                    a = True
+                    if a: 
+                        print(1) # a 가 참이므로 실행된다.
+                    
+                    a = False
+                    if a:
+                        print(2) # a 가 거짓이므로 실행되지 않는다.
+                    
+                    if not a:
+                        print(3) # a 가 거짓이므로 not a 는 참이다. 그러므로 실행된다.
+                    
+                    if a or not a: # a 가 거짓이지만 not a 는 참이다. 그러므로 or 을 하게 되면 실행된다.
+                        print(4)
+                    
+                    if a and not a: # a 가 거짓이고 not a 는 참이다. and 를 하게되면 거짓이므로 실행되지 않는다.
+                        print(5)
+                </code></pre>
+                <p>
+                    if 문 뒤로 bool 형의 변수 a 가 와서 조건의 역할을 하고 있다.
+                </p>
+                <hr>
+                <h3>if-elif-else</h3>
+                <br>
+                <br>
+                <p>
+                    if 문으로 이용해 이런 조건이면 ~~해라 라는 식의 조건제어도 가능하고, 또 한 만약에 이런 조건이면 ~~ 하고 아니면 ~~해라. 이런식의 제어가 필요할 수도 있다. 그런상황에서는 if-else 문법이 있다.
+                </p>
+                <pre><code class="python">
+                    # example 4. if-else
+                    
+                    x = int(input())
+                    if x>=5: 
+                        print("x는 5이상입니다.")
+                    else:
+                        print("x는 5미만입니다.")
+                </code></pre>
+                <p>
+                    위와 같이 작성하면 x 가 5이상이라면 if 블록이 실행되고 아니라면 else 블록이 실행된다.
+                </p>
+                <p>
+                    이런 식의 조건제어도 많이 유용한데 예를 들어 사용자가 "로그인" 을 하는 상황에서 아이디와 비밀번호가 같다면 if 블록이 실행되게 하고 그렇지 않다면 else 블록을 실행하는 상황에서 가능할 것이다.
+                </p>
+                <p>
+                    if-else 말고 조금더 복잡한 조건제어도 있다. if-elif-..-else 문법이 있다.
+                </p>
+                <pre><code class="python">
+                    # example 5. if-elif-else
+                    
+                    x = int(input())
+                    if x >= 100:
+                        print("x 는 100 이상입니다.")
+                    elif x >= 90:
+                        print("x 는 90 이상, 100 미만 입니다.")
+                    elif x >= 80:
+                        print("x 는 80 이상, 90 미만입니다.")
+                    else:
+                        print("x는 80미만 입니다.")
+                </code></pre>
+                <p>
+                    x가 75 일 때 위에서 한줄 씩 실행되는 프로그램의 제어를 상상해보자.
+                </p>
+                <p>
+                    if 문을 만났을 때 조건이 False 이므로 elif 로 간다. elif 에서도 조건이 False 이므로 밑에 elif 로 간다. 또 조건이 False 이므로 else 로 간다.
+                </p>
+                <p>
+                    결과적으로 x 는 80미만 입니다. 가 출력되게 된다.
+                </p>
+                <p>
+                    이번엔 x가 100 일 때 제어를 상상해보자.
+                </p>
+                <p>
+                    if 문을 만났을 때 조건이 True 이다. 그래서 if 블록을 실행하고 <strong>그 밑에 elif 와 else 는 건너듼다. </strong>
+                </p>
+                <p>
+                    마지막으로 x 가 90일 때 제어를 상상해보자.
+                </p>
+                <p>
+                    if 문을 만났을 때 조건이 False 이다. 그래서 밑의 elif 를 봤는데 조건이 True 이다. 그래서 elif 블록을 실행한다. 그리고 <strong>그 밑에 elif 와 else 는 건너듼다. </strong>
+                </p>
+                <p>
+                    위에서 봤듯이 알 수 있겠지만 elif 는 몇번이고 중첩해도 되며 마지막에 꼭 else 로 끝나야 하는 것도 아니다. if-elif-elif 로 끝나도 된다.
+                </p>
+                <hr>
+                <h3>중첩 조건 제어</h3>
+                <br>
+                <br>
+                <p>
+                    마지막으로 중첩 조건제어가 있다.
+                </p>
+                <pre><code class="python">
+                    # example 6. 중첩 조건 제어 
+                    
+                    x = int(input())
+                    y = int(input())
+
+                    if x >= 50:
+                        print("x 가 50 이상입니다.")
+
+                        if y >= 50:
+                           print("y 가 50 이상입니다.")
+                        else:
+                            print("y가 50 미만입니다.")
+
+                    else:
+                        print("x 가 50 미만입니다.")
+
+                        if y >= 50:
+                           print("y 가 50 이상입니다.")
+                        else:
+                            print("y가 50 미만입니다.")
+
+                </code></pre>
+                <p>
+                    제일 먼저 x 에 대해서 제어를 한다음에 해당하면 if 혹은 else 블록으로 가서 또 다시 if-else 로 제어를 할 수가 있다.
+                </p>
+                <p>
+                    이렇게 if 블록안에 또 if-else 를 쓸 수있고 if 문의 활용성은 무궁무진하다 할 수 있겠다.
+                </p>
+                <p style="color:green;">
+                    참고 : if 문안에 또 if 문을 중첩할 때 안쪽 if 문을 구분하기 위하여 indent(들여쓰기) 가 사용되었음을 유의하자.
+                </p>
+                <p>
+                    몰론 아래와 같은 코드도 가능은 하다.
+                </p>
+                <pre><code class="python">
+                    # example 6-1. 중첩 조건 제어 
+                    
+                    x = int(input())
+                    y = int(input())
+
+                    if x >= 50 and y >= 50:
+                        print("x 가 50 이상입니다.")
+                        print("y 가 50 이상입니다.")
+
+                    elif x>= 50 and y &lt; 50:
+                        print("x 가 50 이상입니다.")
+                        print("y가 50 미만입니다.")
+
+                    elif x &lt; 50 and y >= 50:
+                        print("x 가 50 미만입니다.")
+                        print("y 가 50 이상입니다.")
+                    else:
+                        print("x 가 50 미만입니다.")
+                        print("y가 50 미만입니다.")
+
+                </code></pre>
+                <p>
+                    이렇게 코딩해도 같은 효과를 낼 수 있다.
+                </p>
+                <p>
+                    어떻게 조건문을 구성할지는 뭐가 더 가독성 ( 읽기에 이해가 잘되는 코드인가 ? ) 이 좋은지
+                </p>
+                <p>
+                    혹은 어떤 코드가 더 짧은지 등을 기준으로 판단해야 한다. 위와 같은 상황에서는 정답은 없다.
+                </p>
+                <hr>
+                <h3>정리</h3>
+                <p>
+                    이번 챕터에서는 조건문에 대해서 알아보았다.
+                </p>
+                <ul>
+                    <li>if 문으로 특정블록을 특정 조건 ( True )에서만 실행되게 할 수 있다.</li>
+                    <li>if-else 문으로 if, else 블록 중 하나만 실행되게 할 수 있다. </li>
+                    <li>if-elif-elif-..-else 문으로 if, elif, elif, ..., else 블록 중 하나만 실행되게 할 수 있다.</li>
+                    <li>if-else 블록 안에 또 if-else 문을 사용할 수 있다.</li>
+                </ul>
+                <hr>
+                <h3>연습 문제</h3>
+                <br>
+                <br>
+
+                <h3>더 나아가기 : int, str, list 도 조건자리에 올 수 있다</h3>
+            </div>
+        </div>
+
+        <!-- scrollbar -->
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-right">
+            <nav id="navbar-aside" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
+                <a class="navbar-brand" href="#">글 목차</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">수식과 연산자</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-1-1">수식이란?</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-2">산술 연산</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-3">산술 및 대입연산</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-4">부호연산</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-5">관계연산</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-6">논리연산</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-7">비트단위연산</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-8">연산자 실습</a>
+                    </nav>
+                </nav>
+            </nav>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</body>
+
+</html>

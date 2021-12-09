@@ -6,5 +6,6 @@ function path_find(loc, s) {
     if (s == "자료형") return addr + "python_data_type.html";
     if (s == "변수의 응용") return addr + "python_vari_pratice.html";
     if (s == "수식과 연산자") return addr + "python_exp.html";
+    if (s == "조건 제어") return addr + "python_if.html";
     return "";
 }
