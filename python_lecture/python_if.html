@@ -232,7 +232,7 @@
                     프로그래밍이라는 특성상, 다양한 상황과 예외가 생겨나기 마련이고, 그것에 맞추어 대응해야 해서 조건제어는 아주 중요하다고 할 수 있어.
                 </p>
 
-                <h3>프로그램의 제어의 흐름을 느끼자.</h3>
+                <h3 id="item-1-1">프로그램의 제어의 흐름을 느끼자.</h3>
                 <p>
                     나중에 멀티쓰레드나 멀티프로세싱을 하게 되면 머리가 아프지만
                 </p>
@@ -327,7 +327,7 @@
                     또 파이참 같은 IDE 를 사용한다면 Tab 을 1번 누르면 자동으로 space 4칸을 쳐주는 기능이 있어서 좋다.
                 </p>
                 <hr>
-                <h3>if 문</h3>
+                <h3 id="item-1-2">if 문</h3>
                 <pre><code class="python">
                     # example 2-1. if
                     
@@ -391,7 +391,7 @@
                     if 문 뒤로 bool 형의 변수 a 가 와서 조건의 역할을 하고 있다.
                 </p>
                 <hr>
-                <h3>if-elif-else</h3>
+                <h3 id="item-1-3">if-elif-else</h3>
                 <br>
                 <br>
                 <p>
@@ -453,7 +453,7 @@
                     위에서 봤듯이 알 수 있겠지만 elif 는 몇번이고 중첩해도 되며 마지막에 꼭 else 로 끝나야 하는 것도 아니다. if-elif-elif 로 끝나도 된다.
                 </p>
                 <hr>
-                <h3>중첩 조건 제어</h3>
+                <h3 id="item-1-4">중첩 조건 제어</h3>
                 <br>
                 <br>
                 <p>
@@ -526,7 +526,7 @@
                     혹은 어떤 코드가 더 짧은지 등을 기준으로 판단해야 한다. 위와 같은 상황에서는 정답은 없다.
                 </p>
                 <hr>
-                <h3>정리</h3>
+                <h3 id="item-1-5">정리</h3>
                 <p>
                     이번 챕터에서는 조건문에 대해서 알아보았다.
                 </p>
@@ -540,8 +540,79 @@
                 <h3>연습 문제</h3>
                 <br>
                 <br>
+                <del>
+                    빨간 별표의 개수는 난이도를 의미
+                </del>
+                <ul class="list-group">
+                    <li class="list-group-item">사용자로 부터 수 x 를 입력받아 95~100 이면 A+, 90~94 이면 A, 80~89 이면 B, 70~79 이면 C, 60~69 이면 D, 0~59 이면 F 를 출력하기</li>
+                    <li class="list-group-item">사용자로 부터 문자열 password 를 입력받아 그 값이 "abcd1234" 이면 "맞았습니다.", 아니면 "틀렸습니다" 를 출력하기</li>
+                    <li class="list-group-item">사용자로 부터 문자열 account 를 입력받아 그 값이 "abcd" 이면 사용자로부터 문자열 password 를 입력받아 그 값이 "abcd1234" 이면 "성공" 아니면 "비밀번호 실패" 를 출력. 만약 account 가 "abcd" 가 아니였으면 "아이디 실패" 를 출력</li>
+                    <li class="list-group-item">사용자로부터 수 x 를 입력받았을 때 2의 배수이지만, 3의 배수는 아니면 "2의배수", 3의 배수이지만, 2의 배수가 아니면 "3의배수", 2의배수이면서 3의배수면 "6의배수" 를 출력하기.</li>
+                    <li class="list-group-item">사용자로부터 수를 입력받았을 때 1이면 한번 더 수를 입력을 받아서 2이면 한번 더 수를 입력을 받고 3이면 "성공" 을 출력하고 중간에 한번이라도 틀리면 "실패" 를 출력하고 더이상 입력받지 않기</li>
+                </ul>
+                <hr>
 
-                <h3>더 나아가기 : int, str, list 도 조건자리에 올 수 있다</h3>
+                <h3 id="item-1-6">더 나아가기 : int, str, list 도 조건자리에 올 수 있다</h3>
+                <br>
+                <br>
+                <p>
+                    if (조건): 이 때 (조건) 자리에 꼭 bool 타입이 와야 하는 것은 아니다. 몰론 대부분 bool 타입이 오는게 문장이 더 잘 이해가 된다. 
+                </p>
+                <p>
+                    하지만 때로는 int, str, list 가 조건자리에 와도 이해가 잘 되는 경우가 있다.
+                </p>
+                <pre><code class="python">
+                    # example 7. 조건자리에 int, str, list 가 오는 경우 
+                    
+                    x = 123
+                    y = 0
+                    if x:
+                        print("x는 0이 아닙니다.")
+                    else:
+                        print("x는 0입니다.")
+
+                    if y:
+                        print("y는 0이 아닙니다.")
+                    else:
+                        print("y는 0입니다.")
+                    
+                    s = "abcd"
+                    t = ""
+                    if s:
+                        print("s 는 빈문자열이 아닙니다.")
+                    else :
+                        print("s 는 빈문자열 입니다.")
+                    
+                    if t:
+                        print("t 는 빈문자열이 아닙니다.")
+                    else :
+                        print("t 는 빈문자열 입니다.")
+
+                    arr = [1,2,3]
+                    arr2 = []
+                    if arr:
+                        print("arr는 빈 배열이 아닙니다.")
+                    else :
+                        print("arr는 빈 배열 입니다.")
+                    
+                    if arr2:
+                        print("arr2는 빈 배열이 아닙니다.")
+                    else :
+                        print("arr2는 빈 배열 입니다.")
+
+                </code></pre>
+                <p>
+                    코드를 실행해보고 어떤 문장이 출력이 되는지 보자. 
+                </p>
+                <p>
+                    조건 자리에 int 타입이 올 경우 0인지 아닌지, 
+                </p>
+                <p>
+                    str 타입이 올 경우 빈문자열인지 아닌지
+                </p>
+                <p>
+                    list 타입이 올 경우 빈 배열인지 아닌지에 따라서 조건분기를 할 수 있다.
+                </p>
             </div>
         </div>
 
@@ -550,16 +621,14 @@
             <nav id="navbar-aside" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
                 <a class="navbar-brand" href="#">글 목차</a>
                 <nav class="nav nav-pills flex-column">
-                    <a class="nav-link" href="#item-1">수식과 연산자</a>
+                    <a class="nav-link" href="#item-1">조건 제어</a>
                     <nav class="nav nav-pills flex-column">
-                        <a class="nav-link ms-3 my-1" href="#item-1-1">수식이란?</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-2">산술 연산</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-3">산술 및 대입연산</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-4">부호연산</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-5">관계연산</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-6">논리연산</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-7">비트단위연산</a>
-                        <a class="nav-link ms-3 my-1" href="#item-1-8">연산자 실습</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-1">제어와 조건문</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-2">if</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-3">if-elif-else</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-4">중첩 조건 제어</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-5">정리 및 연습문제</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-6">더 나아가기</a>
                     </nav>
                 </nav>
             </nav>
