@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- highlight.js-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+
+
+    <title>강의 자료</title>
+    <style>
+        .body {
+            position: relative;
+        }
+        
+        .selected {
+            background-color: #3c9;
+            color: white;
+        }
+        
+        .sub_selected {
+            font-weight: bold;
+            color: rgb(0, 36, 24);
+        }
+        
+        #navbar-aside {
+            left: 100%;
+        }
+        
+        blockquote {
+            background-color: #eee;
+            border: 2px dashed #ccc;
+            padding: 1em;
+        }
+        
+        pre {
+            background-color: #eee;
+            border: 2px dashed #ccc;
+        }
+    </style>
+
+    <!-- 목차 active -->
+    <script>
+    </script>
+
+    <!-- 스크롤바 따라오게하는 코드 -->
+    <script>
+        //// 아래 offset 함수는 퀵점프에 이용된 함수라, 이미 html상 존재한다면 삭제해도 됨
+        function offset(el) {
+            var rect = el.getBoundingClientRect(),
+                scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+                scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            return {
+                top: rect.top + scrollTop,
+                left: rect.left + scrollLeft
+            }
+        }
+        ////
+
+        window.addEventListener("load", function() {
+
+            var lastScrollTop = 0;
+            var article = document.getElementById("content"); //본문영역 id
+            var aside = document.getElementById("navbar-aside"); //스크롤바 id
+            var side_bar = document.getElementById("left_side_bar"); // 좌측 사이드바 id
+
+            if (document.documentElement.clientWidth > 767 && article.offsetHeight > aside.offsetHeight) {
+                window.addEventListener("scroll", function() {
+                    var scrT = window.pageYOffset || document.documentElement.scrollTop;
+                    var winH = document.documentElement.clientHeight;
+                    var sideH = aside.offsetHeight;
+                    var dir = (scrT > lastScrollTop) ? "down" : "up";
+                    lastScrollTop = scrT;
+                    var sideT = offset(aside).top;
+                    var topLine = offset(article).top;
+                    var bottomLine = topLine + article.offsetHeight - winH;
+
+                    if (sideH > winH) {
+                        if (dir == "down") {
+                            if (scrT >= (sideT + sideH - winH) && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine - (sideH - winH) + 'px';
+                            }
+                            if (scrT >= bottomLine) {
+                                aside.style.marginTop = Math.max(topLine + article.offsetHeight - sideH - topLine, 0) + 'px';
+                            }
+                        } else {
+                            if (scrT <= sideT && scrT > topLine) {
+                                aside.style.marginTop = scrT - topLine + 'px';
+                            }
+                            if (scrT <= topLine) {
+                                aside.style.marginTop = 0;
+                            }
+                        }
+                    } else {
+                        bottomLine = topLine + article.offsetHeight - sideH;
+                        let delta = sideH / 2;
+                        if (dir == "down") {
+                            if (scrT > topLine && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine + delta + 'px';
+                            }
+                            if (scrT >= bottomLine) {
+                                aside.style.marginTop = bottomLine - topLine + delta + 'px';
+                            }
+                        } else {
+                            if (scrT > topLine && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine + delta + 'px';
+                            }
+                            if (scrT <= topLine) {
+                                aside.style.marginTop = 0;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="python_lecture_path_finder.js"></script>
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-aside">
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">프로그래밍 강의</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../introduction/plan/plan.html">개론</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="what_is_python.html">python</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">c lang</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- content -->
+
+    <div class="row">
+        <!-- sidebar -->
+        <div data-bs-offset="2" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="left_side_bar">
+            <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+
+                <span class="fs-5 fw-semibold">목 차</span>
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#beginning-collapse" aria-expanded="false">
+                          파이썬이란 무엇인가
+                        </button>
+                        <div class="collapse " id="beginning-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a onclick="location = path_find(location, '파이썬이란 무엇인가')" style="cursor: pointer;" class="link-dark rounded">파이썬이란 무엇인가</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <button class="btn btn-toggle align-items-center rounded selected" data-bs-toggle="collapse" data-bs-target="#grammer-collapse" aria-expanded="false">
+                          파이썬의 문법
+                        </button>
+                        <div class="collapse show" id="grammer-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a onclick="location = path_find(location, '변수')" style="cursor: pointer;" class="link-dark rounded ">변수</a></li>
+                                <li><a onclick="location = path_find(location, '자료형')" style="cursor: pointer;" class="link-dark rounded ">자료형</a></li>
+                                <li><a onclick="location = path_find(location, '변수의 응용')" style="cursor: pointer;" class="link-dark rounded">변수의 응용</a></li>
+                                <li><a onclick="location = path_find(location, '수식과 연산자')" style="cursor: pointer;" class="link-dark rounded ">수식과 연산자</a></li>
+                                <li><a onclick="location = path_find(location, '조건 제어')" style="cursor: pointer;" class="link-dark rounded ">조건 제어</a></li>
+                                <li><a onclick="location = path_find(location, '반복문')" style="cursor: pointer;" class="link-dark rounded ">반복문</a></li>
+                                <li><a onclick="location = path_find(location, '함수')" style="cursor: pointer;" class="link-dark rounded sub_selected">함수</a></li>
+                                <li><a onclick="location = path_find(location, '지역변수와 전역변수')" style="cursor: pointer;" class="link-dark rounded">지역변수와 전역변수</a></li>
+                                <li><a onclick="location = path_find(location, '모듈')" style="cursor: pointer;" class="link-dark rounded">모듈</a></li>
+                                <li><a onclick="location = path_find(location, '문자열심화')" style="cursor: pointer;" class="link-dark rounded">문자열심화</a></li>
+                                <li><a onclick="location = path_find(location, '리스트와 튜플')" style="cursor: pointer;" class="link-dark rounded">리스트와 튜플</a></li>
+                                <li><a onclick="location = path_find(location, '집합과 사전')" style="cursor: pointer;" class="link-dark rounded">집합과 사전</a></li>
+                                <li><a onclick="location = path_find(location, '클래스')" style="cursor: pointer;" class="link-dark rounded">클래스</a></li>
+                                <li><a onclick="location = path_find(location, '파일 입출력')" style="cursor: pointer;" class="link-dark rounded">파일 입출력</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-3">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#practice-collapse" aria-expanded="false">
+                          파이썬의 응용
+                        </button>
+                        <div class="collapse " id="practice-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="l" class="link-dark rounded">계산기 만들기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">전화번호부 만들기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">구글에서 특정검색어 이미지 다운받기</a></li>
+                                <li><a href="l" class="link-dark rounded">지뢰찾기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">지뢰찾기 (윈도우)</a></li>
+                                <li><a href="l" class="link-dark rounded">나에게 카카오톡 메시지 보내기</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- main_content -->
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <br>
+            <br>
+
+            <div class="page-header">
+                <h1>파이썬의 문법<small>#7</small></h1>
+            </div>
+
+            <br>
+            <div id="content" data-bs-spy="scroll" data-bs-target="#navbar-aside" data-bs-offset="0" tabindex="0">
+                <h1 id="item-1">함수</h1>
+                <br>
+                <br>
+                <br>
+                <p>
+                    이번 시간에는 프로그래밍의 꽃, 함수에 대해서 알아보자.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- scrollbar -->
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-right">
+            <nav id="navbar-aside" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
+                <a class="navbar-brand" href="#">글 목차</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">반복문</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-1-1">while</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-2">for</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-3">break 와 중첩</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-4">정리 및 연습문제</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-5">더 나아가기</a>
+                    </nav>
+                </nav>
+            </nav>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</body>
+
+</html>
