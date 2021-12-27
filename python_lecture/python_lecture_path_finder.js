@@ -9,5 +9,6 @@ function path_find(loc, s) {
     if (s == "조건 제어") return addr + "python_if.html";
     if (s== "반복문") return addr+"python_iter.html";
     if (s=="함수") return addr + "python_func.html";
+    if(s=="모듈") return addr+"python_module.html";
     return "";
 }
