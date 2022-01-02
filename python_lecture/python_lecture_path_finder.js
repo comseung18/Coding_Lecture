@@ -10,5 +10,7 @@ function path_find(loc, s) {
     if (s== "반복문") return addr+"python_iter.html";
     if (s=="함수") return addr + "python_func.html";
     if(s=="모듈") return addr+"python_module.html";
+    if(s=="문자열심화") return addr+"python_str.html";
+    if(s=="리스트와 튜플") return addr+"python_list_tuple.html";
     return "";
 }
