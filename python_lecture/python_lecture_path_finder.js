@@ -12,5 +12,7 @@ function path_find(loc, s) {
     if(s=="모듈") return addr+"python_module.html";
     if(s=="문자열심화") return addr+"python_str.html";
     if(s=="리스트와 튜플") return addr+"python_list_tuple.html";
+    if(s=='클래스') return addr+"python_class.html";
+    if(s=="파일 입출력") return addr+"python_file.html";
     return "";
 }

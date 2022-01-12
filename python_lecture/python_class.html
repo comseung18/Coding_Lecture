@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- highlight.js-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+
+
+    <title>강의 자료</title>
+    <style>
+        .body {
+            position: relative;
+        }
+        
+        .selected {
+            background-color: #3c9;
+            color: white;
+        }
+        
+        .sub_selected {
+            font-weight: bold;
+            color: rgb(0, 36, 24);
+        }
+        
+        #navbar-aside {
+            left: 100%;
+        }
+        
+        blockquote {
+            background-color: #eee;
+            border: 2px dashed #ccc;
+            padding: 1em;
+        }
+        
+        pre {
+            background-color: #eee;
+            border: 2px dashed #ccc;
+        }
+    </style>
+
+    <!-- 목차 active -->
+    <script>
+    </script>
+
+    <!-- 스크롤바 따라오게하는 코드 -->
+    <script>
+        //// 아래 offset 함수는 퀵점프에 이용된 함수라, 이미 html상 존재한다면 삭제해도 됨
+        function offset(el) {
+            var rect = el.getBoundingClientRect(),
+                scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+                scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            return {
+                top: rect.top + scrollTop,
+                left: rect.left + scrollLeft
+            }
+        }
+        ////
+
+        window.addEventListener("load", function() {
+
+            var lastScrollTop = 0;
+            var article = document.getElementById("content"); //본문영역 id
+            var aside = document.getElementById("navbar-aside"); //스크롤바 id
+            var side_bar = document.getElementById("left_side_bar"); // 좌측 사이드바 id
+
+            if (document.documentElement.clientWidth > 767 && article.offsetHeight > aside.offsetHeight) {
+                window.addEventListener("scroll", function() {
+                    var scrT = window.pageYOffset || document.documentElement.scrollTop;
+                    var winH = document.documentElement.clientHeight;
+                    var sideH = aside.offsetHeight;
+                    var dir = (scrT > lastScrollTop) ? "down" : "up";
+                    lastScrollTop = scrT;
+                    var sideT = offset(aside).top;
+                    var topLine = offset(article).top;
+                    var bottomLine = topLine + article.offsetHeight - winH;
+
+                    if (sideH > winH) {
+                        if (dir == "down") {
+                            if (scrT >= (sideT + sideH - winH) && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine - (sideH - winH) + 'px';
+                            }
+                            if (scrT >= bottomLine) {
+                                aside.style.marginTop = Math.max(topLine + article.offsetHeight - sideH - topLine, 0) + 'px';
+                            }
+                        } else {
+                            if (scrT <= sideT && scrT > topLine) {
+                                aside.style.marginTop = scrT - topLine + 'px';
+                            }
+                            if (scrT <= topLine) {
+                                aside.style.marginTop = 0;
+                            }
+                        }
+                    } else {
+                        bottomLine = topLine + article.offsetHeight - sideH;
+                        let delta = sideH / 2;
+                        if (dir == "down") {
+                            if (scrT > topLine && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine + delta + 'px';
+                            }
+                            if (scrT >= bottomLine) {
+                                aside.style.marginTop = bottomLine - topLine + delta + 'px';
+                            }
+                        } else {
+                            if (scrT > topLine && scrT < bottomLine) {
+                                aside.style.marginTop = scrT - topLine + delta + 'px';
+                            }
+                            if (scrT <= topLine) {
+                                aside.style.marginTop = 0;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="python_lecture_path_finder.js"></script>
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-aside">
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">프로그래밍 강의</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../introduction/plan/plan.html">개론</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="what_is_python.html">python</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">c lang</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- content -->
+
+    <div class="row">
+        <!-- sidebar -->
+        <div data-bs-offset="2" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="left_side_bar">
+            <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+
+                <span class="fs-5 fw-semibold">목 차</span>
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#beginning-collapse" aria-expanded="false">
+                          파이썬이란 무엇인가
+                        </button>
+                        <div class="collapse " id="beginning-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a onclick="location = path_find(location, '파이썬이란 무엇인가')" style="cursor: pointer;" class="link-dark rounded">파이썬이란 무엇인가</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <button class="btn btn-toggle align-items-center rounded selected" data-bs-toggle="collapse" data-bs-target="#grammer-collapse" aria-expanded="false">
+                          파이썬의 문법
+                        </button>
+                        <div class="collapse show" id="grammer-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a onclick="location = path_find(location, '변수')" style="cursor: pointer;" class="link-dark rounded ">변수</a></li>
+                                <li><a onclick="location = path_find(location, '자료형')" style="cursor: pointer;" class="link-dark rounded ">자료형</a></li>
+                                <li><a onclick="location = path_find(location, '변수의 응용')" style="cursor: pointer;" class="link-dark rounded">변수의 응용</a></li>
+                                <li><a onclick="location = path_find(location, '수식과 연산자')" style="cursor: pointer;" class="link-dark rounded ">수식과 연산자</a></li>
+                                <li><a onclick="location = path_find(location, '조건 제어')" style="cursor: pointer;" class="link-dark rounded ">조건 제어</a></li>
+                                <li><a onclick="location = path_find(location, '반복문')" style="cursor: pointer;" class="link-dark rounded ">반복문</a></li>
+                                <li><a onclick="location = path_find(location, '함수')" style="cursor: pointer;" class="link-dark rounded ">함수</a></li>
+                                <li><a onclick="location = path_find(location, '모듈')" style="cursor: pointer;" class="link-dark rounded ">모듈</a></li>
+                                <li><a onclick="location = path_find(location, '문자열심화')" style="cursor: pointer;" class="link-dark rounded ">문자열심화</a></li>
+                                <li><a onclick="location = path_find(location, '리스트와 튜플')" style="cursor: pointer;" class="link-dark rounded">리스트와 튜플</a></li>
+                                <li><a onclick="location = path_find(location, '집합과 사전')" style="cursor: pointer;" class="link-dark rounded">집합과 사전</a></li>
+                                <li><a onclick="location = path_find(location, '클래스')" style="cursor: pointer;" class="link-dark rounded sub_selected">클래스</a></li>
+                                <li><a onclick="location = path_find(location, '파일 입출력')" style="cursor: pointer;" class="link-dark rounded">파일 입출력</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-3">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#practice-collapse" aria-expanded="false">
+                          파이썬의 응용
+                        </button>
+                        <div class="collapse " id="practice-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="l" class="link-dark rounded">계산기 만들기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">전화번호부 만들기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">구글에서 특정검색어 이미지 다운받기</a></li>
+                                <li><a href="l" class="link-dark rounded">지뢰찾기 (콘솔)</a></li>
+                                <li><a href="l" class="link-dark rounded">지뢰찾기 (윈도우)</a></li>
+                                <li><a href="l" class="link-dark rounded">나에게 카카오톡 메시지 보내기</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- main_content -->
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <br>
+            <br>
+
+            <div class="page-header">
+                <h1>파이썬의 문법<small>#11</small></h1>
+            </div>
+
+            <br>
+            <div id="content" data-bs-spy="scroll" data-bs-target="#navbar-aside" data-bs-offset="0" tabindex="0">
+                <h1 id="item-1">클래스</h1>
+                <br>
+                <br>
+                <br>
+                <p>
+                    이번 시간에는 클래스를 배워볼거야.
+                </p>
+                <p>
+                    클래스 라는 말 조금은 익숙한 단어일거야.
+                </p>
+                <p>
+                    학교/학원에서 반을 클래스 라고 하기도 하고 게임에서는 전사클래스, 마법사클래스, 궁수클래스 라는 말을 쓰기도 하지?
+                </p>
+                <p>
+                    이렇듯 클래스는 뭔가 "범주에 대한 구분" 하는 의미로 쓰인 다고 생각해. 
+                </p>
+                <p>
+                    파이썬에서는 type 함수를 이용해 자료의 클래스를 알 수 있지?
+                </p>
+                <p>
+                    파이썬에서 모든 자료는 자신의 class 를 가지고 있어. int, float, str, list, tuple, function 등등.
+                </p>
+                <p>
+                    게임에서 클래스가 다르면 쓸 수 있는 스킬 같은 것들이 다르듯이 파이썬에서도 클래스마다 할 수 있는 것들이 달라.
+                </p>
+                <p>
+                    int 클래스로는 정수를 표현하고 str 클래스는 문자열을 표현하고 등등..
+                </p>
+                <hr>
+                <h3 id="item-1-1">클래스와 인스턴스</h3>
+                <br>
+                <br>
+                <p>
+                    클래스를 일종의 범주에 따른 개념이라고 하면 인스턴스는 그 범주에 대한 실체 라고 할 수 있어.
+                </p>
+                <p>
+                    예를 들면 사람이라는 클래스안에 승주와 도현이라는 인스턴스가 있는 거지.
+                </p>
+                <p>
+                    int 라는 클래스가 있는데 a=3 이라고 쓰면 a 라는 int 클래스에 대한 인스턴스가 생기는 거야.
+                </p>
+                <p>
+                    이렇게 어떤 클래스를 인스턴스화 할 때 그 클래스이름() 를 하면 인스턴스화 할 수 있어.
+                </p>
+                <p>
+                    예를 들면 우리가 input 이라는 함수를 이용해서 입력을 받은 다음에 int(input()) 을 이용한적이 있었지? 
+                </p>
+                <p>
+                    이건 int 라는 클래스를 인스턴스화 한 것을 의미해. 
+                </p>
+                <p>
+                    인스턴스화 할 때 생성자 함수를 이용해서 인스턴스화 되기 때문에 매개변수가 있을수 있고 없을 수 있어.
+                </p>
+                <p>
+                    이번 시간에는 사람 이라는 클래스를 직접 만드면서 클래스에 대해서 알아보자.
+                </p>
+                <pre><code class="python">
+                    class Person:
+                        pass
+
+                    p = Person()
+                    print(type(p))
+                </code></pre>
+                <p>
+                    클래스를 만들기 위해서 class 라는 키워드를 이용해 만들 수 있어. pass 라는 키워드는 안의 내용을 비워놓는 다는 의미야.
+                </p>
+                <p>
+                    위 코드를 보면 Person 이라는 클래스가 있고, p 라는 인스턴스가 있는거야. 그리고 type(p) 를 보면 class '__main__.Person'  라고 나오는데, p 의 클래스가 Person 인 것을 볼 수 있어.
+                </p>
+                <p>
+                    클래스를 만들 때는 그 클래스가 공통적으로 가지는 것이 무엇인가를 생각하면서 만들게 되는데, 사람이라는 클래스는 공통적으로 이름이나, 나이 같은 것들 가질거야.
+                </p>
+                <p>
+                    사실은 사람이라는 클래스는 이것말고도 엄~청나게 많은 공통점을 가지고 있을 텐데, 클래스는 프로그래머가 쓰임에 따라 정의하기 나름이라서, 꼭 실제와 같을 필요는 없어.
+                </p>
+                <p>
+                    자 그러면 사람이는 클래스가 이름이나 나이같은 정보를 가지게 할려면 어떻게 해야할까? 우선 아래와 같은 방법이 있겠어.
+                </p>
+                <pre><code class="python">
+                    class Person:
+                        pass
+
+                    p = Person()
+                    p.name = "승주"
+                    p.age = 24
+
+
+                    print(p.name)
+                    print(p.age)
+                </code></pre>
+                <p>
+                    p 라는 Person 에 대한 인스턴스를 만든다음에 . 을 이용해서 인스턴스에 여러 정보를 이용할 수 있는데. 클래스, 인스턴스, 모듈에서 '.' 을 이용하면 그 클래스, 인스턴스, 모듈에 대한 값이나 함수같은 "멤버" 에 접근할 수 있어. 
+                </p>
+                <p>
+                    그니까 p 라는 인스턴스를 만든 다음에 . 을 이용해서 p 라는 인스턴스에 이름이나 나이같은 멤버를 정의해줄 수가 있지.
+                </p>
+                <p>
+                    이런 방식도 있지만, 파이썬에서 권장하는 것은 생성함수를 이용하는 거야. 아까 클래스를 인스턴스로 만들 때 생성함수로 만들어진다고 했지?
+                </p>
+                <pre><code class="python">
+                class Person:
+                    def __init__(self):
+                        self.name = "승주"
+                        self.age = 24
+
+                p = Person()
+                print(p.name)
+                print(p.age)
+                </code></pre>
+                <p>
+                    Person() 이라고 했을 때, 파이썬에서 init 함수를 자동으로 실행해줘. 이 때 init 함수에 self 라는 매개변수가 들어가는데,
+                </p>
+                <p>
+                    self 는 그 인스턴스 자체를 의미해. self 를 이용해서 인스턴스에 name 과 age 에 대한 멤버들을 정의할 수 있었어.
+                </p>
+                <p>
+                    근데 저렇게 정의하게 되면 모든 Person 클래스의 인스턴스는 name 과 age 가 모두 승주와 24 가 될거야.
+                </p>
+                <p>
+                    인스턴스마다 이름과 나이가 달랐으면 좋겠는데 어떻게 해야할까?
+                </p>
+                <p>
+                    init 은 "함수" 이기 때문에 매개변수를 이용하면 해결 할 수 있어.
+                </p>
+                <pre><code class="python">
+                    class Person:
+                        def __init__(self, name, age):
+                            self.name = name
+                            self.age = age
+
+                    p = Person("Jax", 20)
+                    print(p.name)
+                    print(p.age)
+                </code></pre>
+                <p>
+                    init 함수에 name 과 age 라는 매개변수가 추가 되었으니 Person 을 인스턴스화 할 때 그에 대한 매개변수를 써줘야겠지? "Jax" 와 20을 매개변수로 줘서 인스턴스화 했더니 name 과 age 를 다르게 설정 할 수 있었어.
+                </p>
+                <p>
+                    클래스는 멤버를 가질 수 있는데, 그 멤버는 값이나 함수가 될 수 있어. 예를 들어 게임에서 마법사 라는 class 가 있으면 그 마법사 class 마다 공통적으로 가지는 skill 이 있을거야. 그러한 멤버들을 . 을 이용해서 접근 할 수 있고,
+                </p>
+                <p>
+                    위 코드에서는 name 과 age 가 Person 클래스의 멤버라고 할 수 있어. 이번엔 함수를 멤버로 할려면 어떻게 해야할까?
+                </p>
+                <pre><code class="python">
+                    class Person:
+                        def __init__(self, name, age):
+                            self.name = name
+                            self.age = age
+
+                        def say(self):
+                            print("안녕! 나의 이름은 {0} 이고 나의 나이는 {1} 이야.".format(self.name, self.age))
+
+                    p = Person("Jax", 20)
+                    p.say()
+                </code></pre>
+                <p>
+                    Person 이라는 클래스를 만들고 그 멤버로 say 라는 함수를 만들었어. 멤버함수는 공통적으로 self 라는 매개변수를 가지고 self 를 이용해서 인스턴스에 접근할 수 있어.
+                </p>
+                <p>
+                    이러한 방식으로 하는 이유는 인스턴스마다 멤버의 값들이 다를 수 있기 때문에 self 라고 써서 인스턴스에 직접 접근해서 알아올 수 밖에 없기 때문이야.
+                </p>
+                <p>
+                    그러면 그 동안 많이 써왔던 int(input()) 이라는 건 어떤 의미일까?
+                </p>
+                <p>
+                    input 이라는 함수를 호출해서 그것에 대한 반환값이 여기서는 입력값이겠지.
+                </p>
+                <p>
+                    그 반환값을 int 클래스에 생성함수에 대한 매개변수로 넘겨서 int 클래스에 대한 인스턴스를 얻는 과정이였어.
+                </p>
+                <hr>
+                <h3 id="item-1-2">클래스와 상속</h3>
+                <br>
+                <br>
+                <p>
+                    클래스하면 따라 오는 것이 상속이라는 개념인데 보통 현실에서 상속이라고 하면, 부모님의 재산같은 것을 물려받을 때 상속이라고 하지?
+                </p>
+                <p>
+                    프로그래밍에서도 비슷한 의미인데, B 클래스가 A 클래스를 상속한다고 하면 B 클래스는 A 클래스에 대한 멤버정보를 그대로 가져오는 거야.
+                </p>
+                <p>
+                    일종의 하위분류 라고 할 수 있는데 사람도 사람이라는 개념안에 여러 기준에 따라서 나눌 수 있을거야. 
+                </p>
+                <p>
+                    Person 이라는 클래스를 상속하는 Student 와 Teacher 를 만들어보자.
+                </p>
+                <pre><code class="python">
+                    class Person:
+                        def __init__(self, name, age):
+                            self.name = name
+                            self.age = age
+
+                        def say(self):
+                            print("안녕! 나의 이름은 {0} 이고 나의 나이는 {1} 이야.".format(self.name, self.age))
+
+                        def work(self):
+                            pass
+
+                    class Student(Person):
+                        def work(self):
+                            print("내 이름은 {0} 이고 저의 일은 공부하는 것 입니다.".format(self.name))
+
+
+                    p1 = Student("승주", 24)
+                    p1.work()
+                    p1.say()
+                </code></pre>
+                <p>
+                    우선 Student 라는 클래스를 만들었는데 클래스를 정의할 때 Person 을 상속하기 위해서 클래스이름 옆에 () 을 쓰고 부모클래스를 써줬어. 이렇게 하면 Student 클래스의 인스턴스는 name, age, say, work 라는 멤버를 가지게 되는 거야.
+                </p>
+                <p>
+                    Student 클래스의 인스턴스인 p1 을 만들고 p1 의 work 함수를 호출했어. 그러면 Person 에도 work 라는 멤버함수가 있고, Student 에도 work 라는 멤버함수가 있는데,
+                </p>
+                <p>
+                    파이썬에서 기본적으로 자신의 현재 클래스에 대한 멤버함수가 있으면 그걸 호출하고 없으면 부모의 함수를 호출해.
+                </p>
+                <p>
+                    보면 work 는 Student 클래스에 있으니까 Student 의 work 를 호출하고 say 는 없으니까 부모의 say 를 호출하는 것을 알 수 있어.
+                </p>
+                <pre><code class="python">
+                    class Person:
+                        def __init__(self, name, age):
+                            self.name = name
+                            self.age = age
+
+                        def say(self):
+                            print("안녕! 나의 이름은 {0} 이고 나의 나이는 {1} 이야.".format(self.name, self.age))
+
+                        def work(self):
+                            pass
+
+                    class Student(Person):
+                        def work(self):
+                            print("내 이름은 {0} 이고 저의 일은 공부하는 것 입니다.".format(self.name))
+
+
+                    class Teacher(Person):
+                        def work(self):
+                            print("내 이름은 {0} 이고 저의 일은 가르치는 것 입니다.".format(self.name))
+
+                    p1 = Student("승주", 24)
+                    p1.work()
+                    p1.say()
+
+                    print()
+
+                    p2 = Teacher("철수", 40)
+                    p2.say()
+                    p2.work()
+                </code></pre>
+                <p>
+                    이번엔 Teacher 라는 클래스를 만들었어. Student 와 비슷하게 정의해봤어. 
+                </p>
+                <p>
+                    이렇게 상속에 대해 알아보았는데 상속이 어떨 때 유용할까?
+                </p>
+                <p>
+                    롤을 예로 들어볼까. 미니언들은 공통적으로 공격력, 방어력, 이동속도, 사거리, 공격속도 등을 가질거야. 이건 근접미니언, 원거리 미니언, 대포미니언 모두 공통이겠지.
+                </p>
+                <p>
+                    또 피가 0 이하로 떨어지면 죽는다 거나 사거리에 적이 들어오면 공격한다 라는 것은 근접, 원거리 , 대포, 슈퍼미니언 에 관계없이 공통된 특성들이지?
+                </p>
+                <p>
+                    이런 공통적인 점에 대해서 Minion 이라는 클래스를 만들어서 정의한 다음에
+                </p>
+                <p>
+                    각각 특색적인 부분들을 Minion 클래스를 상속해서 만드는 거야.
+                </p>
+                <p>
+                    이런 식으로 코딩을 하면 코드를 유지보수 하기가 쉬워지고 코드의 가독성이 좋아지니까 결국엔 프로그래머에게 굉장히 좋은 거지.
+                </p>
+                <hr>
+                
+            </div>
+        </div>
+
+        <!-- scrollbar -->
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-right">
+            <nav id="navbar-aside" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
+                <a class="navbar-brand" href="#">글 목차</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">클래스</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-1-1">클래스와 인스턴스</a>
+                        <a class="nav-link ms-3 my-1" href="#item-1-2">클래스와 상속</a>
+                    </nav>
+                </nav>
+            </nav>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</body>
+
+</html>
