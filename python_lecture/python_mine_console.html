@@ -170,10 +170,10 @@
                         </div>
                     </li>
                     <li class="mb-2">
-                        <button class="btn btn-toggle align-items-center rounded selected" data-bs-toggle="collapse" data-bs-target="#grammer-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle align-items-center rounded " data-bs-toggle="collapse" data-bs-target="#grammer-collapse" aria-expanded="false">
                           파이썬의 문법
                         </button>
-                        <div class="collapse show" id="grammer-collapse">
+                        <div class="collapse" id="grammer-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a onclick="location = path_find(location, '변수')" style="cursor: pointer;" class="link-dark rounded ">변수</a></li>
                                 <li><a onclick="location = path_find(location, '자료형')" style="cursor: pointer;" class="link-dark rounded ">자료형</a></li>
@@ -185,24 +185,20 @@
                                 <li><a onclick="location = path_find(location, '모듈')" style="cursor: pointer;" class="link-dark rounded ">모듈</a></li>
                                 <li><a onclick="location = path_find(location, '문자열심화')" style="cursor: pointer;" class="link-dark rounded ">문자열심화</a></li>
                                 <li><a onclick="location = path_find(location, '리스트와 튜플')" style="cursor: pointer;" class="link-dark rounded">리스트와 튜플</a></li>
-                                <li><a onclick="location = path_find(location, '집합과 사전')" style="cursor: pointer;" class="link-dark rounded">집합과 사전</a></li>
+                                <li><a onclick="location = path_find(location, '집합과 사전')" style="cursor: pointer;" class="link-dark rounded ">집합과 사전</a></li>
                                 <li><a onclick="location = path_find(location, '클래스')" style="cursor: pointer;" class="link-dark rounded ">클래스</a></li>
-                                <li><a onclick="location = path_find(location, '파일 입출력')" style="cursor: pointer;" class="link-dark rounded sub_selected">파일 입출력</a></li>
+                                <li><a onclick="location = path_find(location, '파일 입출력')" style="cursor: pointer;" class="link-dark rounded ">파일 입출력</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="mb-3">
-                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#practice-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle align-items-center rounded selected" data-bs-toggle="collapse" data-bs-target="#practice-collapse" aria-expanded="false">
                           파이썬의 응용
                         </button>
-                        <div class="collapse " id="practice-collapse">
+                        <div class="collapse show" id="practice-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="l" class="link-dark rounded">계산기 만들기 (콘솔)</a></li>
-                                <li><a href="l" class="link-dark rounded">전화번호부 만들기 (콘솔)</a></li>
-                                <li><a href="l" class="link-dark rounded">구글에서 특정검색어 이미지 다운받기</a></li>
-                                <li><a href="l" class="link-dark rounded">지뢰찾기 (콘솔)</a></li>
-                                <li><a href="l" class="link-dark rounded">지뢰찾기 (윈도우)</a></li>
-                                <li><a href="l" class="link-dark rounded">나에게 카카오톡 메시지 보내기</a></li>
+                                <li><a onclick="location = path_find(location, '지뢰 찾기 (콘솔)')" style="cursor: pointer;" class="link-dark rounded sub_selected">지뢰 찾기 (콘솔)</a></li>
+                                <li><a onclick="location = path_find(location, '지뢰 찾기 (윈도우)')" style="cursor: pointer;" class="link-dark rounded ">지뢰 찾기 (윈도우)</a></li>
                             </ul>
                         </div>
                     </li>
@@ -216,79 +212,10 @@
             <br>
 
             <div class="page-header">
-                <h1>파이썬의 문법<small>#13</small></h1>
+                <h1>파이썬의 응용<small>#1</small></h1>
+                <h3>지뢰 찾기 게임 만들기</h3>
             </div>
 
-            <br>
-            <div id="content" data-bs-spy="scroll" data-bs-target="#navbar-aside" data-bs-offset="0" tabindex="0">
-                <h1 id="item-1">파일 입출력</h1>
-                <br>
-                <br>
-                <br>
-                <p>
-                    이번 시간에는 파일 입출력을 배워볼거야.
-                </p>
-                <p>
-                    컴퓨터를 다루는데 파일은 빼놓을 수 없을거야. 파일을 만들거나, 그 파일에 대한 내용을 읽는 것은 정~~말 기본적인 거라서 대부분 프로그래밍언어들이 지원할거야.
-                </p>
-                <h3 id="item-1-1">파일 만들기와 읽기</h3>
-                <pre><code class="python">
-                    f = open("test.txt", "w")
-                    f.write("test 파일입니당")
-                    f.close()
-                </code></pre>
-                <p>
-                    위 코드를 실행하면 실행된 위치에 test.txt 라는 파일이 생겼을 거야.
-                </p>
-                <p>
-                    파이썬에서는 open 이라는 함수를 이용해서 파일을 읽거나 파일을 만들거나 파일을 쓸 수 있는데,
-                </p>
-                <p>
-                    open 의 첫 번째 매개변수는 파일의 이름, 두 번째 매개변수는 open 의 모드를 의미하는데, "w", "r", "a" 모드가 있어.
-                </p>
-                <p>
-                    w 는 write 모드로, 파일을 만들어서 여는 모드야. 이미 파일이 있는데 또 "w" 모드로 열면 기존 파일을 삭제하고 다시 새로 만드니 주의하자.
-                </p>
-                <p>
-                    r 은 read 모드로, 파일을 읽는 모드야. 파일을 읽기만 하기 때문에 수정은 불가능하겠지?
-                </p>
-                <p>
-                    a 는 append 모드로, 기존에 있는 파일을 수정하고 싶을 때 쓰는 모드야. 가령 로그파일이 있다고 하면, 기존 로그파일 뒤에 새로운 로그를 추가할려면
-                </p>
-                <p>
-                    기존 파일에 내용이 추가되는거니까 a 모드가 적절할거야.
-                </p>
-                <p>
-                    또 파일을 사용한 다음에는 그 파일을 닫아줘야 프로그램이 꼬이지 않으니까 잊지말고 close 하도록 하자.
-                </p>
-                <pre><code class="python">
-                    f = open("test.txt", "r")
-                    a = f.read()
-                    print(a)
-                    f.close()
-                </code></pre>
-                <p>
-                    r 모드로 아까 만들었던 파일을 열어보자. read 함수를 이용하면 f 안에 있는 모든 내용을 읽어서 str 타입으로 반환해주는 함수야.
-                </p>
-                <p>
-                    근데 파일 내용이 아주 크면 한 번에 read 를 하면 컴퓨터 많이 힘들겠지? 그래서 read 말고 readline 함수를 이용하면 한 줄씩 읽을 수 있어.
-                </p>
-                <pre><code class="python">
-                    f = open("test.txt", "w")
-                    f.write("test 파일입니당\n")
-                    f.write("test 파일입니당\n")
-                    f.close()
-
-
-                    f = open("test.txt", "r")
-                    a = f.readline()
-                    print(a)
-                    f.close()
-                </code></pre>
-                <p>
-                    사실 파일에 관해서는 이게 다라서 따로 할 말은 없당..
-                </p>
-            </div>
         </div>
 
         <!-- scrollbar -->
