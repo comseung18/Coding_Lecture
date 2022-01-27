@@ -16,5 +16,6 @@ function path_find(loc, s) {
     if(s=="집합과 사전") return addr+"python_set.html";
     if(s=="파일 입출력") return addr+"python_file.html";
     if(s=='지뢰 찾기 (콘솔)') return addr+"python_mine_console.html";
+    if(s=='지뢰 찾기 (윈도우)') return addr+"python_mine_window.html";
     return "";
 }
